@@ -1,1 +1,74 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap");
+
 @import "tailwindcss";
+
+@theme {
+  /* =========================
+     Font Family
+  ========================= */
+
+  --font-display: "Bebas Neue", "Barlow Condensed", sans-serif;
+  --font-condensed: "Barlow Condensed", sans-serif;
+  --font-mono: "Space Mono", monospace;
+  --font-body: "Inter", sans-serif;
+
+  /* =========================
+     Base Colors
+  ========================= */
+
+  --color-black: #090909;
+  --color-charcoal: #151515;
+  --color-soft-black: #1c1c1c;
+
+  /* =========================
+     Concrete / Texture Colors
+  ========================= */
+
+  --color-concrete: #353535;
+  --color-concrete-light: #5c5c5c;
+  --color-border: #686868;
+  --color-muted: #9a9a94;
+
+  /* =========================
+     Typography Colors
+  ========================= */
+
+  --color-white: #ffffff;
+  --color-off-white: #f1f1ed;
+  --color-paper: #e8e8e1;
+
+  /* =========================
+     FC Barcelona Colors
+  ========================= */
+
+  --color-barca-blue: #123a70;
+  --color-barca-navy: #0b1c38;
+  --color-barca-garnet: #8a1538;
+  --color-barca-red: #581329;
+  --color-barca-gold: #b79a59;
+
+  /* =========================
+     Layout
+  ========================= */
+
+  --spacing-page: 4rem;
+  --spacing-section: 8rem;
+  --spacing-header: 5rem;
+
+  /* =========================
+     Border Radius
+  ========================= */
+
+  --radius-none: 0;
+  --radius-card: 2px;
+
+  /* =========================
+     Shadows
+  ========================= */
+
+  --shadow-editorial:
+    0 20px 60px rgba(0, 0, 0, 0.35);
+
+  --shadow-hard:
+    8px 8px 0 rgba(0, 0, 0, 0.35);
+}
