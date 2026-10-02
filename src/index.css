@@ -72,3 +72,8 @@
   --shadow-hard:
     8px 8px 0 rgba(0, 0, 0, 0.35);
 }
+
+body {
+   background-color: black;
+   color: white;
+}

@@ -1,9 +1,11 @@
 import Navbar from "./genio/navbar/Navbar"
+import Players from "./genio/Players/Players"
 
 function App() {
   return (
-    <div className="navbar">
+    <div>
       <Navbar/>
+      <Players/>
     </div>
   )
 }
