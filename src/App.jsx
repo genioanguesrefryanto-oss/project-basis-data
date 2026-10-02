@@ -1,9 +1,10 @@
-import Navbar from "./genio/navbar/Navbar"
+import Sejarah from "./ALFIN/sejarah/Sejarah"
+
 
 function App() {
   return (
     <div className="navbar">
-      <Navbar/>
+      <Sejarah/>
     </div>
   )
 }
