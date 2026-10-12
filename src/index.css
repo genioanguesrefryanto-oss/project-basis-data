@@ -72,3 +72,256 @@
   --shadow-hard:
     8px 8px 0 rgba(0, 0, 0, 0.35);
 }
+
+html {
+  /* Anchor navbar harus mendarat DI BAWAH header, bukan Ketemu behind-nya.
+     Set di sini (bukan per-section) karena berlaku buat semua anchor yang ada
+     di halaman, termasuk yang nanti ditambah. */
+  scroll-padding-top: 6rem;
+
+  /* Jarak kosong dikasih 0.5rem biar section yang dituju nggak nempel header */
+  scroll-behavior: smooth;
+}
+
+/* Hormati setting sistem: user yang minta reduced motion nggak mau
+   halaman nge-luncur halus. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+   background-color: black;
+   color: white;
+}
+
+/* =========================================================
+   HOVER LANGUAGE
+   Satu set motif untuk semua elemen interaktif, biar situs ini
+   terasa satu benda dan bukan kumpulan komponen:
+     - kartu  : garis garnet grow di atas + foto zoom pelan +
+                cahaya diagonal melintas + nama geser + slot angka
+                berubah emas
+     - tombol : isian garnet naik dari bawah, label geser
+     - nav    : garis emas tumbuh dari kiri
+   Semua durasi sengaja panjang (0.4-0.9s) supaya terasa "berat"
+   seperti kartu yang benar-benar disentuh, bukan nge-lonceng.
+   ========================================================= */
+@layer components {
+  .person-card {
+    position: relative;
+    transition:
+      transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1),
+      border-color 0.4s ease,
+      box-shadow 0.5s ease;
+  }
+
+  /* Garis garnet tipis di tepi atas kartu. */
+  .person-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 2px;
+    background: var(--color-barca-garnet);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+    z-index: 2;
+  }
+
+  .person-card:hover {
+    transform: translateY(-6px);
+    border-color: rgb(183 154 89 / 0.55);
+    box-shadow: var(--shadow-editorial);
+  }
+
+  .person-card:hover::before {
+    transform: scaleX(1);
+  }
+
+  /* Amplop foto: zoom terjadi DI DALAM, jadi tepi kartu tetap tajam. */
+  .person-card-media {
+    position: relative;
+    overflow: hidden;
+    background: var(--color-charcoal);
+  }
+
+  .person-card-media > img {
+    transition:
+      transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1),
+      filter 0.6s ease;
+  }
+
+  .person-card:hover .person-card-media > img {
+    transform: scale(1.08);
+    filter: saturate(1.1) contrast(1.05);
+  }
+
+  /* Cahaya diagonal melintas, seperti foil kartu Abram. */
+  .person-card-sheen {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      105deg,
+      transparent 30%,
+      rgb(255 255 255 / 0.22) 48%,
+      transparent 66%
+    );
+    transform: translateX(-120%);
+    transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .person-card:hover .person-card-sheen {
+    transform: translateX(120%);
+  }
+
+  .person-card-name {
+    transition:
+      color 0.35s ease,
+      transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .person-card:hover .person-card-name {
+    color: var(--color-barca-gold);
+    transform: translateX(4px);
+  }
+
+  /* Slot angka squad / crest di sisi kanan. */
+  .person-card-tag {
+    transition:
+      border-color 0.4s ease,
+      color 0.4s ease;
+  }
+
+  .person-card:hover .person-card-tag {
+    border-color: rgb(183 154 89 / 0.7);
+    color: var(--color-barca-gold);
+  }
+
+  /* ---------- TOMBOL ---------- */
+  .sweep-btn {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    transition:
+      border-color 0.4s ease,
+      color 0.4s ease;
+  }
+
+  .sweep-btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--color-barca-garnet);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.38s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .sweep-btn:hover {
+    border-color: var(--color-barca-gold);
+    color: var(--color-barca-gold);
+  }
+
+  .sweep-btn:hover::before {
+    transform: scaleY(1);
+  }
+
+  .sweep-btn-label {
+    transition: transform 0.38s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .sweep-btn:hover .sweep-btn-label {
+    transform: translateX(5px);
+  }
+
+  /* ---------- NAV ---------- */
+  .nav-link {
+    position: relative;
+    padding-bottom: 2px;
+    transition: color 0.3s ease;
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--color-barca-gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .nav-link:hover {
+    color: var(--color-barca-gold);
+  }
+
+  .nav-link:hover::after {
+    transform: scaleX(1);
+  }
+
+  /* ---------- FOOTER ---------- */
+  /* Bar emas tumbuh dari bawah di tepi kiri tiap sel nav. */
+  .footer-link {
+    position: relative;
+    transition: background-color 0.35s ease;
+  }
+
+  .footer-link::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--color-barca-gold);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .footer-link:hover::before {
+    transform: scaleY(1);
+  }
+}
+
+/* Keyboard users butuh tanda fokus yang jelas; hover ga bisa diandrebut. */
+:focus-visible {
+  outline: 2px solid var(--color-barca-gold);
+  outline-offset: 3px;
+}
+
+/* Reduced motion: Interaction tetap ada (warna berubah) tapi TANPA gerak.
+   Elemen yang gerak disembunyikan wholesale -- kalau cuma dimatikan
+   transisinya, misal .person-card-sheen akan berhenti tepat di tengah
+   kartu dan jadi goresan putih permanen. */
+@media (prefers-reduced-motion: reduce) {
+  .person-card,
+  .person-card-media > img,
+  .person-card-name,
+  .person-card-tag,
+  .sweep-btn,
+  .nav-link,
+  .footer-link {
+    transition-duration: 0.01ms !important;
+  }
+
+  .person-card:hover,
+  .person-card:hover .person-card-media > img,
+  .person-card:hover .person-card-name {
+    transform: none !important;
+  }
+
+  .person-card-sheen,
+  .sweep-btn::before,
+  .nav-link::after,
+  .footer-link::before {
+    display: none !important;
+  }
+}
